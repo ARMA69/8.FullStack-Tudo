@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-function TodoPage({user}) {
-  return (
-    <div>TodoPage - Hello here - {user.firstName} {user.lastName}</div>
-  )
+const TodoPage = ({user}) => {
+    return (
+        <h3>
+            TASK -- Your Task Here -- {user.firstName} {user.lastName}
+        </h3>
+    );
 }
 
-export default TodoPage
+export default TodoPage;

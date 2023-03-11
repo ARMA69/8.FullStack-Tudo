@@ -1,11 +1,12 @@
 const { User } = require("../models");
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const NotFoundError = require('../errors/NotFound');
 
 module.exports.registrationUser = async(req, res, next) => {
     try {
         const {body, passwordHash} = req;
         const createdUser = await User.create({...body, passwordHash});
-        res.status(201).send(createdUser);
+        res.status(201).send({data: createdUser});
     } catch (error) {
         next(error);
     }
@@ -13,15 +14,19 @@ module.exports.registrationUser = async(req, res, next) => {
 
 module.exports.loginUser = async(req, res, next) => {
     try {
-        const {body, passwordHash } = req;
+        const { body } = req;
         const foundUser = await User.findOne({
             email: body.email
         });
         if(foundUser) {
-            const result = await bcrypt.compare(passwordHash, foundUser.passwordHash);
-            res.status(200).send('Logged in');
+            const result = await bcrypt.compare(body.password, foundUser.passwordHash);
+            if(!result) {
+                throw new NotFoundError('Incorrect password');
+            }
+            res.status(200).send({data: foundUser})
+        } else {
+            throw new NotFoundError('Incorrect email');
         }
-        
     } catch (error) {
         next(error);
     }
