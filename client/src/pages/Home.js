@@ -7,11 +7,15 @@ import SignUp from '../components/SignUp'
 function Home() {
  const [state, setState] = useState(false)
  const [data, setData] = useState()
+ const [error, setError] = useState(null)
 
  useEffect(()=>{
   if(data){
     registerUser(data)
     .then(result => {console.log(result)})  
+    .catch(err => {
+      setError(err)
+    })
   }
    }, [data])
 
@@ -33,6 +37,7 @@ function Home() {
     <main>
       {state ? <SignIn sendData={getData}/> : <SignUp sendData={getData}/>} 
     </main>
+  {error && <div style={{color: 'red', fontWeight: 'bold'}}>{error}</div>}
     </>
   )
 }
