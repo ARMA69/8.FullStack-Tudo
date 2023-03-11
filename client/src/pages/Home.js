@@ -1,45 +1,51 @@
-import React, { useState, useEffect } from 'react'
-import {registerUser} from '../api/index'
-import SignIn from '../components/SignIn'
-import SignUp from '../components/SignUp'
 
+import React, {useState, useEffect} from 'react';
+import {useNavigate} from "react-router-dom";
+import {registerUser} from '../api/index';
+import SignIn from '../components/SignIn';
+import SignUp from '../components/SignUp';
 
-function Home() {
- const [state, setState] = useState(false)
- const [data, setData] = useState()
- const [error, setError] = useState(null)
+const Home = (props) => {
+    const [state, setState] = useState(true);
+    const [data, setData] = useState();
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
- useEffect(()=>{
-  if(data){
-    registerUser(data)
-    .then(result => {console.log(result)})  
-    .catch(err => {
-      setError(err)
-    })
-  }
-   }, [data])
+    useEffect(() => {
+        if(data) {
+            registerUser(data)
+            .then(result => {
+                props.sendUser(result);
+                navigate('/tasks');
+            })
+            .catch(err => {
+                setError(err);
+            })
+        }
+    }, [data])
 
- const buttonHadler = () =>  {
-  return setState(!state)
- }
- 
- const getData = (userData) => {
-  setData(userData)
- }
+    const buttonHandler = () => {
+        setState(state => !state);
+    }
 
-  const textButton = state ? "SignUp" : "SignIn"
+    const getData = (userData) => {
+        setData(userData);
+    }
 
-  return (
-    <>
-    <header>
-      <button onClick={buttonHadler}>{textButton}</button>
-    </header>
-    <main>
-      {state ? <SignIn sendData={getData}/> : <SignUp sendData={getData}/>} 
-    </main>
-  {error && <div style={{color: 'red', fontWeight: 'bold'}}>{error}</div>}
-    </>
-  )
+    const textButton = state ? "SignIn" : "SignUp";
+
+    return (
+        <>
+        <header>
+            <button onClick={buttonHandler}>{textButton}</button>
+        </header>
+
+        <main>
+            {state ? <SignUp sendData={getData} /> : <SignIn sendData={getData} />}
+        </main>
+        {error && <div>{error}</div>}
+        </>
+    );
 }
 
 export default Home
