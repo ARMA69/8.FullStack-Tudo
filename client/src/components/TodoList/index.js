@@ -1,10 +1,12 @@
 import React from 'react'
+import TodoItem from '../TodoItem'
 
-function TodoList({todos}) {
+const  TodoList =(props) => {
   return (
     <>
-    <div>TodoList</div>
-     {todos.map(td=> <li>{td}</li>)}
+    <h1>Todo List</h1>
+    <div>{props.todos.map(td => <TodoItem item={td} key={td._id} />)}</div>
+     
     </>
   )
 }
