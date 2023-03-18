@@ -1,16 +1,12 @@
 .container {
-    background-color: rgb(36, 110, 115);
+    background-color: cornflowerblue;
     padding: 20px;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .form-wrapper {
     width: 300px;
-    margin: 35px auto;
+    margin: 0 auto;
     border: 1px solid black;
     display: flex;
     flex-direction: column;

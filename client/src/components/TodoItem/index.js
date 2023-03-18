@@ -1,7 +1,7 @@
-import React from 'react'
-import styles from './TodoItem.module.css'
+import React from 'react';
+import styles from './TodoItem.module.css';
 
-  const TodoItem = (props) => {
+const TodoItem = (props) => {
     const {item: {body, deadline, status}} = props;
     return (
         <li>
@@ -12,4 +12,4 @@ import styles from './TodoItem.module.css'
     );
 }
 
-export default TodoItem
+export default TodoItem;
