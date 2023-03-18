@@ -38,11 +38,11 @@ const TodoPage = (props) => {
         <>      
             <h1>Todo Page</h1>
             <TodoForm sendDate={getNewTd}/>
-          <h3>
+          <div>
                     TASK -- Your Task Here -- {props.user.firstName} {props.user.lastName}
                     <TodoList todos={todos}/>
 
-        </h3>
+        </div>
                
         </>
 
