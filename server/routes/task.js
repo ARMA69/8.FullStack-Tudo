@@ -1,9 +1,12 @@
-const Router = require('express')
-const taskRouter = Router()
+const Router = require('express');
+const TaskController = require('../controllers/task.controller');
+const {checkToken} = require('../middlewares/checkToken');
 
-const TaskController = require('../controllers/task.controller')
 
-taskRouter.post('/', TaskController.createUserTask)
-taskRouter.get('/:userId', TaskController.getAllUserTasks)
+const taskRouter = Router();
 
-module.exports= taskRouter
+
+taskRouter.post('/', checkToken, TaskController.createUserTask);
+taskRouter.get('/', checkToken, TaskController.getAllUserTasks);
+
+module.exports = taskRouter;
